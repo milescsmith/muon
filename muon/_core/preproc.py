@@ -531,7 +531,8 @@ def neighbors(
                 if neighbordistances.size == 0:
                     neighbordistances = graph
                 else:
-                    neighbordistances += graph
+                    # neighbordistances += graph <- this crashes
+                    neighbordistances = (neighbordistances.tocoo() + graph.tocoo()).tocsr() # dumb, but doesn't crash
             # the naive version of neighbordistances[idx[:, np.newaxis], idx[np.newaxis, :]] += graph
             else:
                 # uses way too much memory
